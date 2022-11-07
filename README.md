@@ -1,3 +1,9 @@
+# Installing and Running
+install http-server from npm
+
++ mvn install
++ http-server target/site
+
 # Circuit Simulator (CircuitJS1)
 
 ![](https://my77thblog.pp.ua/images/PROJECTS/circuit-simulator/circuitjs1-1-2-3-en.png)

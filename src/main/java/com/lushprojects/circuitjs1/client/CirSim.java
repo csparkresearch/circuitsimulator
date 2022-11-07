@@ -110,7 +110,7 @@ ClickHandler, DoubleClickHandler, ContextMenuHandler, NativePreviewHandler,
 MouseOutHandler, MouseWheelHandler {
     
     Random random;
-    Button resetButton;
+    Button resetButton, centreDiagramButton, doUndoButton, doRedoButton;
     Button runStopButton;
     Button dumpMatrixButton;
     MenuItem aboutItem;
@@ -173,8 +173,8 @@ MouseOutHandler, MouseWheelHandler {
 
 //    Class addingClass;
     PopupPanel contextPanel = null;
-    int mouseMode = MODE_SELECT;
-    int tempMouseMode = MODE_SELECT;
+    int mouseMode = MODE_DRAG_ALL;
+    int tempMouseMode = MODE_DRAG_ALL;
     String mouseModeStr = "Select";
     static final double pi = 3.14159265358979323846;
     static final int MODE_ADD_ELM = 0;
@@ -185,7 +185,7 @@ MouseOutHandler, MouseWheelHandler {
     static final int MODE_DRAG_POST = 5;
     static final int MODE_SELECT = 6;
     static final int MODE_DRAG_SPLITTER = 7;
-    static final int infoWidth = 160;
+    static final int infoWidth = 120;
     int dragGridX, dragGridY, dragScreenX, dragScreenY, initDragGridX, initDragGridY;
     long mouseDownTime;
     long zoomTime;
@@ -279,10 +279,11 @@ MouseOutHandler, MouseWheelHandler {
 	MenuBar fileMenuBar;
 	VerticalPanel verticalPanel;
 	VerticalPanel verticalPanel2;
+	HorizontalPanel horizontalPanel;
 	ScrollPanel slidersPanel;
 	CellPanel buttonPanel;
 	private boolean mouseDragging;
-	double scopeHeightFraction=0.2;
+	double scopeHeightFraction=0.4;
 	
 	Vector<CheckboxMenuItem> mainMenuItems = new Vector<CheckboxMenuItem>();
 	Vector<String> mainMenuItemNames = new Vector<String>();
@@ -296,9 +297,9 @@ MouseOutHandler, MouseWheelHandler {
     // canvas width/height in px (before device pixel ratio scaling) 
     int canvasWidth, canvasHeight;
     
-    static final int MENUBARHEIGHT=30;
-    static int VERTICALPANELWIDTH=166; // default
-    static final int POSTGRABSQ=25;
+    static final int MENUBARHEIGHT=32;
+    static int VERTICALPANELWIDTH=135; // default
+    static final int POSTGRABSQ=50; // wide grab area for mobile. 50 instead of 25
     static final int MINPOSTGRABSIZE = 256;
     final Timer timer = new Timer() {
 	      public void run() {
@@ -720,7 +721,7 @@ MouseOutHandler, MouseWheelHandler {
 	    }
 	});
 	resetButton.setStylePrimaryName("topButton");
-	buttonPanel.add(runStopButton = new Button(LSHTML("<Strong>RUN</Strong>&nbsp;/&nbsp;Stop")));
+	buttonPanel.add(runStopButton = new Button(LSHTML("<Strong>RUN</Strong>&nbsp;/&nbsp;Stop"))); 
 	runStopButton.addClickHandler(new ClickHandler() {
 	    public void onClick(ClickEvent event) {
 		setSimRunning(!simIsRunning());
@@ -779,6 +780,45 @@ MouseOutHandler, MouseWheelHandler {
 	verticalPanel.add(titleLabel);
 
 	Label sab;
+
+	// Scope intro - jithin 
+	sab = new Label(LS("Scopes")+"");
+	sab.addStyleName("sabLabel");
+	verticalPanel.add(sab);
+	l = new Label(LS("Green: Voltage"));
+	l.addStyleName("sidePanelElm");
+	verticalPanel.add(l);
+	l = new Label(LS("Yellow: Current"));
+	l.addStyleName("sidePanelElm");
+	verticalPanel.add(l);
+	
+	verticalPanel.add(centreDiagramButton = new Button(LSHTML("<i class='cirjsicon-target'></i>Center the Circuit")));
+	centreDiagramButton.addClickHandler(new ClickHandler() {
+	    public void onClick(ClickEvent event) {
+		centreCircuit();
+	    }
+	});
+	centreDiagramButton.setStylePrimaryName("topButton");
+
+	horizontalPanel=new HorizontalPanel();
+
+	horizontalPanel.add(doUndoButton = new Button(LSHTML("<i class='cirjsicon-ccw'></i>Undo")));
+	doUndoButton.addClickHandler(new ClickHandler() {
+	    public void onClick(ClickEvent event) {
+		doUndo();
+	    }
+	});
+
+	horizontalPanel.add(doRedoButton = new Button(LSHTML("<i class='cirjsicon-cw'></i>Redo")));
+	doRedoButton.addClickHandler(new ClickHandler() {
+	    public void onClick(ClickEvent event) {
+		doRedo();
+	    }
+	});
+	verticalPanel2.add(horizontalPanel);
+
+
+
 	sab = new Label(LS("Sliders and buttons")+":");
 	sab.addStyleName("sabLabel");
 	verticalPanel.add(sab);
@@ -787,6 +827,9 @@ MouseOutHandler, MouseWheelHandler {
 	slidersPanel.add(verticalPanel2);
 	verticalPanel2.addStyleName("sidePanelvp2");
 	verticalPanel2.setWidth("150px");
+
+
+
 
 	//slidersPanel.setAlwaysShowScrollBars(true);
 	slidersPanel.getElement().getStyle().setOverflowX(Overflow.HIDDEN);
@@ -1703,18 +1746,12 @@ MouseOutHandler, MouseWheelHandler {
         callUpdateHook();
     }
 
+
     void drawBottomArea(Graphics g) {
 	int leftX = 0;
 	int h = 0;
-	if (stopMessage == null && scopeCount == 0) {
-	    leftX = max(canvasWidth-infoWidth, 0);
-	    int h0 = (int) (canvasHeight * scopeHeightFraction);
-	    h = (mouseElm == null) ? 70 : h0;
-	}
-	if (stopMessage != null && circuitArea.height > canvasHeight-30)
-	    h = 30;
+	leftX = 10;
 	g.setColor(printableCheckItem.getState() ? "#eee" : "#111");
-	g.fillRect(leftX, circuitArea.height-h, circuitArea.width, canvasHeight-circuitArea.height+h);
 	g.setFont(CircuitElm.unitsFont);
 	int ct = scopeCount;
 	if (stopMessage != null)
@@ -1774,10 +1811,6 @@ MouseOutHandler, MouseWheelHandler {
 		    info[i] = s;
 	    }
 	    int x = leftX + 5;
-	    if (ct != 0)
-		x = scopes[ct-1].rightEdge() + 20;
-//	    x = max(x, canvasWidth*2/3);
-	  //  x=cv.getCoordinateSpaceWidth()*2/3;
 	    
 	    // count lines of data
 	    for (i = 0; info[i] != null; i++)
@@ -1789,7 +1822,7 @@ MouseOutHandler, MouseWheelHandler {
 	    if (savedFlag)
 		info[i++] = "(saved)";
 
-	    int ybase = circuitArea.height-h;
+	    int ybase = 10;
 	    for (i = 0; info[i] != null; i++)
 		g.drawString(info[i], x, ybase+15*(i+1));
 	}
@@ -1836,10 +1869,9 @@ MouseOutHandler, MouseWheelHandler {
     	int iw = infoWidth;
     	if (colct <= 2)
     		iw = iw*3/2;
-    	int w = (canvasWidth-iw) / colct;
+    	int w = (canvasWidth);
+    	int sh = h / colct;
     	int marg = 10;
-    	if (w < marg*2)
-    		w = marg*2;
     	pos = -1;
     	int colh = 0;
     	int row = 0;
@@ -1857,7 +1889,7 @@ MouseOutHandler, MouseWheelHandler {
     			s.speed = speed;
     			s.resetGraph();
     		}
-    		Rectangle r = new Rectangle(pos*w, canvasHeight-h+colh*row, w-marg, colh);
+    		Rectangle r = new Rectangle(0, circuitArea.height + pos*sh, canvasWidth, sh-marg);
     		row++;
     		if (!r.equals(s.rect))
     			s.setRect(r);
@@ -3820,6 +3852,7 @@ MouseOutHandler, MouseWheelHandler {
 		h.addItem(aboutItem);
 		aboutItem.setScheduledCommand(new MyCommand("file","about"));
 		h.addSeparator();
+		/*
 		h.addItem(aboutCircuitsItem = iconMenuItem("link", "About Circuits",
 		new Command() { public void execute(){
 				ScriptInjector.fromString("nw.Shell.openExternal('https://www.falstad.com/circuit/e-index.html');")
@@ -3835,7 +3868,7 @@ MouseOutHandler, MouseWheelHandler {
 				.setWindow(ScriptInjector.TOP_WINDOW)
 				.inject();
 			}
-		}));
+		}));*/
 
 		menuBar.addItem(LS("Help"), h);
 		
@@ -3911,9 +3944,14 @@ MouseOutHandler, MouseWheelHandler {
 		// TODO: Maybe think about some better approach to cache management!
 		String url=GWT.getModuleBaseURL()+"circuits/"+str+"?v="+random.nextInt(); 
 		loadFileFromURL(url);
-		if (title != null)
-		    titleLabel.setText(title);
+		if (title != null){
+			titleLabel.setText(title);
 			setSlidersPanelHeight();
+		}else{
+			setCircuitTitle(str);//jithin
+			setSlidersPanelHeight();
+
+		}
 		unsavedChanges = false;
 	}
 	

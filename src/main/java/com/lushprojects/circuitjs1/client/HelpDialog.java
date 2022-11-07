@@ -42,13 +42,13 @@ public class HelpDialog extends DialogBox {
 
 		      //create tabs 
 		tp.add(vpEN = new VerticalPanel(), tab1Title);
-		vpEN.setWidth("500px");
-		vpEN.add(new HTML("<iframe style=\"border:0;\" src=\"help/EN.html\" width=\"500\" height=\"400\" scrolling=\"auto\" frameborder=\"1\"></iframe>"));
+		vpEN.setWidth("100%");
+		vpEN.add(new HTML("<iframe style=\"border:0;\" src=\"help/EN.html\" width=\"100%\" height=\"400\" scrolling=\"auto\" frameborder=\"1\"></iframe>"));
 		
+/*
 		tp.add(vpRU = new VerticalPanel(), tab2Title);
 		vpRU.setWidth("500px");
 		vpRU.add(new HTML("<iframe style=\"border:0;\" src=\"help/RU.html\" width=\"500\" height=\"400\" scrolling=\"auto\" frameborder=\"1\"></iframe>"));
-/*
 		tp.add(vpPL = new VerticalPanel(), tab3Title);
 		vpPL.setWidth("500px");
 		vpPL.add(new HTML("<iframe style=\"border:0;\" src=\"help/PL.html\" width=\"500\" height=\"400\" scrolling=\"auto\" frameborder=\"1\"></iframe>"));
@@ -70,7 +70,7 @@ public class HelpDialog extends DialogBox {
 		tp.selectTab(0);
 
 		//set width if tabpanel
-		tp.setWidth("500");
+		tp.setWidth("100%");
 		
 		vp.add(hp);
 		hp.add(okButton = new Button("OK"));
