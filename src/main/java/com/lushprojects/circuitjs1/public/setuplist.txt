@@ -1,4 +1,16 @@
 ### setuplist.txt first line must be a comment
++SEELab3/ExpEYES
+3)PlotACandDC.txt Plot AC and DC
+DiodeClamping.txt Diode Clamping
+DiodeClipping.txt Diode Clipping
+FullWaveRectifier.txt Full Wave Rectifier
+HalfWaveRectifier.txt Half Wave Rectifier
+InvertingOpamp.txt Inverting Opamp
+SteadyStateResponse.txt LCR Steady State
+SummingAmplifier.txt Summing Amplifier
+BipolarVoltageTripler.txt Bipolar Voltage Tripler
+BridgeRectifier.txt Bridge Rectifier
+-
 +Basics
 ohms.txt Ohm's Law
 resistors.txt Resistors
