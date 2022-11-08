@@ -1,5 +1,9 @@
-circuitsimulator (0.1-1) UNRELEASED; urgency=medium
+circuitsimulator (0.1.1-1) UNRELEASED; urgency=medium
 
   * Initial release. (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * ignore more files
+  * first publication
+  * added maven to build-dependencies
+  * New upstream version 0.1.1
 
- -- Georges Khaznadar <georgesk@debian.org>  Tue, 08 Nov 2022 16:26:29 +0100
+ -- Georges Khaznadar <georgesk@debian.org>  Tue, 08 Nov 2022 19:49:42 +0100
