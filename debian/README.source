@@ -1,0 +1,13 @@
+circuitsimulator for Debian
+--------------------------
+
+The source of the package is maintained at 
+https://github.com/csparkresearch/circuitsimulator ; this repository is
+essentially a fork of https://github.com/SEVA77/circuitjs1, with some changes:
+
+- all code related to AVR8 is removed
+- the file war/lz-string.js is downloaded from
+  https://github.com/pieroxy/lz-string
+
+ -- Georges Khaznadar <georgesk@debian.org>, Tue,  8 Nov 2022 16:41:35 +0100
+
