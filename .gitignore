@@ -1,3 +1,9 @@
+# emacs
+*~
+
+# debian quilt
+.pc/
+
 #GWT cache
 gwt-unitCache/
 war/circuitjs1/
