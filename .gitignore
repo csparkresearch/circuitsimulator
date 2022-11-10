@@ -1,5 +1,7 @@
 # emacs
 *~
+# quilt
+.pc/
 
 #GWT cache
 gwt-unitCache/
