@@ -14,5 +14,13 @@ Package: eyes-circuitsimulator
 Architecture: all
 Depends:
  ${misc:Depends},
-Description: <insert up to 60 chars description>
- <Insert long description, indented with spaces.>
+Enhances:
+ eyes17
+Description: program for modeling ideal electric circuits
+ This program is distributed as a program for education. It is not
+ recommended to use the program for modeling real circuits, since
+ many components in the program are idealized.
+ .
+ The program supports the following languages: English, Russian, Danish,
+ German, Polish, Spanish, French, Italian, Portuguese, Czech, Norwegian,
+ Chinese.
