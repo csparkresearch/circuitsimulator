@@ -1,4 +1,4 @@
-circuitsimulator (0.1.1-1) UNRELEASED; urgency=medium
+circuitsimulator (0.1.1-1) georgesk-unstable; urgency=medium
 
   * Initial release. (Closes: #nnnn)  <nnnn is the bug number of your ITP>
   * ignore more files
