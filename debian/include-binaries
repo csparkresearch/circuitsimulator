@@ -1,0 +1,36 @@
+# the contents of the directory target/site
+# are built by the command `mvn install` which cannot be run
+# inside a cowbuilder login shell without Internet access
+
+target/site/circuitjs1/clear.cache.gif
+target/site/circuitjs1/gwt/clean/images/circles.png
+target/site/circuitjs1/gwt/clean/images/corner.png
+target/site/circuitjs1/gwt/clean/images/hborder.png
+target/site/circuitjs1/gwt/clean/images/thumb_horz.png
+target/site/circuitjs1/gwt/clean/images/thumb_vertical.png
+target/site/circuitjs1/gwt/clean/images/vborder.png
+target/site/font/fontello.eot
+target/site/font/fontello.ttf
+target/site/font/fontello.woff
+target/site/font/fontello.woff2
+target/site/help/bk_img/SPDTswitch.png
+target/site/help/bk_img/capatitor.png
+target/site/help/bk_img/diode.png
+target/site/help/bk_img/ground.png
+target/site/help/bk_img/inductor.png
+target/site/help/bk_img/led.png
+target/site/help/bk_img/nMOSFET.png
+target/site/help/bk_img/npn.png
+target/site/help/bk_img/pMOSFET.png
+target/site/help/bk_img/pnp.png
+target/site/help/bk_img/resistor.png
+target/site/help/bk_img/switch.png
+target/site/help/bk_img/text.png
+target/site/help/bk_img/vsoorse1t.png
+target/site/help/bk_img/vsoorse2t.png
+target/site/help/bk_img/wire.png
+target/site/help/bk_img/zdiode.png
+target/site/help/for_translations.zip
+target/site/help/move-top.png
+target/site/icon.png
+target/site/js/zoomico.png
